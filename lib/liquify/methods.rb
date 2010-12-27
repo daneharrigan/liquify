@@ -26,21 +26,23 @@ module Liquify
   end
 
   module InstanceMethods
-    def to_liquid #:nodoc:
-      liquify_args = self.class.instance_variable_get(:@liquify_args) || {}
-      liquify_output = instance_variable_get(:@liquify_output) || {}
+    unless method_defined? :to_liquid
+      def to_liquid #:nodoc:
+        liquify_args = self.class.instance_variable_get(:@liquify_args) || {}
+        liquify_output = instance_variable_get(:@liquify_output) || {}
 
-      if liquify_output.empty?
-        liquify_args.each do |key, value|
-          if value.respond_to?(:call)
-            liquify_output[key] = value.arity.zero? ? value.call : value.call(self)
-          else
-            liquify_output[key] = self.send(key)
+        if liquify_output.empty?
+          liquify_args.each do |key, value|
+            if value.respond_to?(:call)
+              liquify_output[key] = value.arity.zero? ? value.call : value.call(self)
+            else
+              liquify_output[key] = self.send(key)
+            end
           end
         end
-      end
 
-      liquify_output
+        liquify_output
+      end
     end
   end
 end
