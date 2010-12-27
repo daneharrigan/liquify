@@ -32,6 +32,24 @@ describe Liquify do
   end
 
   describe '.render' do
+    context 'when a drop is registered as a class' do
+      before(:each) do
+        foo_drop = mock(FooDrop, :to_liquid => {'first_name' => 'Foo'})
+        FooDrop.should_receive(:new).and_return(foo_drop)
+        @template = '{{ foo.first_name }}'
 
+        Liquify.setup do |config|
+          config.register_drop :foo, FooDrop
+        end
+      end
+
+      it 'makes a new instance of the FooDrop' do
+        Liquify.render(@template)
+      end
+
+      it 'renders "Foo" as the first name in the template' do
+        Liquify.render(@template).should == 'Foo'
+      end
+    end
   end
 end
