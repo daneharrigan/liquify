@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Liquify::Drop do
+describe Liquify::Methods do
   describe '.liquify_method' do
     before(:each) do
       Liquify.setup do |config|
