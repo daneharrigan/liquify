@@ -16,8 +16,7 @@ module Liquify
           key, value = arg, :self
 
           if Hash === arg
-            arg.each { |k, v| key, value = k, v }
-            liquify_args[key.to_s] = value
+            arg.each { |k, v| liquify_args[k.to_s] = v }
           else
             liquify_args[key.to_s] = value
           end
@@ -34,7 +33,7 @@ module Liquify
       if liquify_output.empty?
         liquify_args.each do |key, value|
           if value.respond_to?(:call)
-            liquify_output[key] = value.call(self)
+            liquify_output[key] = value.arity.zero? ? value.call : value.call(self)
           else
             liquify_output[key] = self.send(key)
           end

@@ -13,8 +13,12 @@ describe Liquify::Drop do
       Liquify.render(template).should == 'Foo Bar'
     end
 
-    it 'returns the output of the proc stored' do
+    it 'returns the output of a labmda with an argument passed' do
       Liquify.render('{{ bar.full_name }}').should == 'Foo Bar'
+    end
+
+    it 'returns the output of a labmda without an argument passed' do
+      Liquify.render('{{ bar.age }}').should == '25'
     end
   end
 end
