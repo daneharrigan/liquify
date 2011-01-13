@@ -32,6 +32,7 @@ module Liquify
       args = {}
       @@drops.each { |name, klass| args[name.to_s] = klass.respond_to?(:call) ? klass.call : klass.new }
       @@filters.each { |filter| Liquid::Template.register_filter(filter) }
+      @@tags.each { |tag, klass| Liquid::Template.register_tag(tag, klass) }
       Liquid::Template.parse(template).render(args)
     end
   end
