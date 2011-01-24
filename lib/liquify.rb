@@ -1,5 +1,6 @@
 require 'liquid'
 require 'liquify/methods'
+require 'liquify/parameter'
 require 'liquify/drop'
 
 if defined?(Rails) && Rails.version >= '3'
