@@ -7,10 +7,10 @@ module Liquify
 
       markup.each do |arg|
         key, value = arg.split(':')
-        key = strip_quotes(key)
+        key = strip_quotes(key.strip)
 
         if value
-          value = strip_quotes(value)
+          value = strip_quotes(value.strip)
           options[key] = value
         else
           args << key
@@ -19,6 +19,10 @@ module Liquify
       args << options unless options.empty?
 
       super(args)
+    end
+
+    def extract_options!
+      last.is_a?(Hash) ? pop : {}
     end
 
     private
