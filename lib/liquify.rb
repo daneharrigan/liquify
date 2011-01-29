@@ -63,7 +63,7 @@ module Liquify
     # template as a string.
     #
     #  template = '{{ drop_name.method }}'
-    #  Liquify.invoke(template)
+    #  Liquify.invoke(template) # => Rendered Liquid template
     def invoke(template)
       args = {}
       @@drops.each { |name, klass| args[name.to_s] = klass.respond_to?(:call) ? klass.call : klass.new }

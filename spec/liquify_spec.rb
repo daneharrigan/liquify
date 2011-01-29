@@ -31,7 +31,7 @@ describe Liquify do
     end
   end
 
-  describe '.render' do
+  describe '.invoke' do
     context 'when a drop is registered as a class' do
       before(:each) do
         foo_drop = mock(FooDrop, :to_liquid => {'first_name' => 'Foo'})
@@ -44,11 +44,11 @@ describe Liquify do
       end
 
       it 'makes a new instance of the FooDrop' do
-        Liquify.render(@template)
+        Liquify.invoke(@template)
       end
 
       it 'renders "Foo" as the first name in the template' do
-        Liquify.render(@template).should == 'Foo'
+        Liquify.invoke(@template).should == 'Foo'
       end
     end
   end

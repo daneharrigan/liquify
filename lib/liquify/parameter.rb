@@ -21,8 +21,10 @@ module Liquify
       super(args)
     end
 
-    def extract_options!
-      last.is_a?(Hash) ? pop : {}
+    unless Array.instance_methods.include? :extract_options!
+      def extract_options!
+        last.is_a?(Hash) ? pop : {}
+      end
     end
 
     private
