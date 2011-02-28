@@ -6,7 +6,7 @@ module Liquify
       if method(:invoke).arity == 0
         invoke
       else
-        params = Liquify::Parameter.new(@markup)
+        params = Liquify::Parameter.new(@markup, context)
         invoke(params)
       end
     end

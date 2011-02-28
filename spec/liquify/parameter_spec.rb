@@ -11,6 +11,13 @@ describe Liquify::Parameter do
     parameters.should == ['a', 'b', {'foo' => 'bar', 'baz' => 'cux'}]
   end
 
+  context 'when a hash is passed in referencing a context value' do
+    it 'assigns the context value to the hash entry' do
+      parameters = Liquify::Parameter.new('"a", foo: bar', { 'bar' => {:cux => 'qux'} })
+      parameters.should == ['a', {'foo' => {:cux => 'qux'} }]
+    end
+  end
+
   describe '#extract_options!' do
     context 'when a hash is available' do
       before(:each) do

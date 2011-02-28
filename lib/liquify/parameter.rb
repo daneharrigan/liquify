@@ -1,6 +1,6 @@
 module Liquify
   class Parameter < Array
-    def initialize(markup)
+    def initialize(markup, context={})
       markup = markup.split(',')
       args = []
       options = {}
@@ -10,7 +10,7 @@ module Liquify
         key = strip_quotes(key.strip)
 
         if value
-          value = strip_quotes(value.strip)
+          value = (value =~ /("|')/) ? strip_quotes(value.strip) : context[value.strip]
           options[key] = value
         else
           args << key
@@ -21,7 +21,7 @@ module Liquify
       super(args)
     end
 
-    unless Array.instance_methods.include? :extract_options!
+    unless self.instance_methods.include? :extract_options!
       def extract_options!
         last.is_a?(Hash) ? pop : {}
       end
