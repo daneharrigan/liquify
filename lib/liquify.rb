@@ -72,5 +72,10 @@ module Liquify
       @@tags.each { |tag, klass| Liquid::Template.register_tag(tag, klass) }
       Liquid::Template.parse(template).render(args)
     end
+
+    def render(template)
+      warn 'DEPRECATED: render has been replaced with invoke'
+      invoke(template)
+    end
   end
 end
