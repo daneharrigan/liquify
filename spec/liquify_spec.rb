@@ -51,5 +51,12 @@ describe Liquify do
         Liquify.invoke(@template).should == 'Foo'
       end
     end
+
+    context 'when additional context information needs to be added' do
+      it 'renders as if it were registered in Liquify' do
+        output = Liquify.invoke('{{ qux }}', :qux => 'cux qux')
+        output.should == 'cux qux'
+      end
+    end
   end
 end

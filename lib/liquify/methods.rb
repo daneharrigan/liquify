@@ -8,6 +8,9 @@ module Liquify
 
   module ClassMethods
     protected
+      #
+      #
+      #
       def liquify_method(*args)
         liquify_args = instance_variable_get :@liquify_args
         liquify_args ||= {}

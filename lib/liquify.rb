@@ -65,12 +65,20 @@ module Liquify
     #
     #  template = '{{ drop_name.method }}'
     #  Liquify.invoke(template) # => Rendered Liquid template
-    def invoke(template)
-      args = {}
-      @@drops.each { |name, klass| args[name.to_s] = klass.respond_to?(:call) ? klass.call : klass.new }
+    def invoke(template, extra_context={})
+      context = {}
+      @@drops.each { |name, klass| context[name.to_s] = klass.respond_to?(:call) ? klass.call : klass.new }
       @@filters.each { |filter| Liquid::Template.register_filter(filter) }
       @@tags.each { |tag, klass| Liquid::Template.register_tag(tag, klass) }
-      Liquid::Template.parse(template).render(args)
+
+      # ensuring any extra context values that come in as symbols are
+      # converted to strings
+      extra_keys = extra_context.keys.map!(&:to_s)
+      extra_context = Hash[extra_keys.zip(extra_context.values)]
+
+      context.merge!(extra_context)
+
+      Liquid::Template.parse(template).render(context)
     end
 
     def render(template)
