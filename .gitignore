@@ -3,3 +3,4 @@ pkg/*
 .bundle
 *.swp
 .rvmrc
+spec/watchr.script

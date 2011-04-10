@@ -3,6 +3,7 @@ require 'liquify/methods'
 require 'liquify/parameter'
 require 'liquify/drop'
 require 'liquify/tag'
+require 'liquify/block'
 
 if defined?(Rails) && Rails.version >= '3'
   require File.expand_path(File.dirname(__FILE__) + '/rails/active_record_hook.rb')
