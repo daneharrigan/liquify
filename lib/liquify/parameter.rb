@@ -2,18 +2,18 @@ module Liquify
   class Parameter < Array
     def initialize(markup, context={})
       markup = markup.split(',')
+      @markup = markup
       args = []
       options = {}
 
       markup.each do |arg|
         key, value = arg.split(':')
-        key = strip_quotes(key.strip)
+        key = key.strip
 
         if value
-          value = (value =~ /("|')/) ? strip_quotes(value.strip) : context[value.strip]
-          options[key] = value
+          options[key] = find_from_context_or_value(value, context)
         else
-          args << key
+          args << find_from_context_or_value(key, context)
         end
       end
       args << options unless options.empty?
@@ -30,6 +30,10 @@ module Liquify
     private
       def strip_quotes(value)
         value.strip.gsub(/^('|")|('|")$/,'')
+      end
+
+      def find_from_context_or_value(value, context)
+        value =~ /("|')/ ? strip_quotes(value.strip) : context[value.strip]
       end
   end
 end

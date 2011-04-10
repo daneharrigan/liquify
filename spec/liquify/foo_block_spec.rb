@@ -4,10 +4,11 @@ describe FooBlock do
   before(:each) do
     Liquify.setup do |c|
       c.register_tag :foo_block, FooBlock
+      c.register_drop :item, lambda { 'Item Text' }
     end
 
     @content = <<-STR
-      {% foo_block as: 'f' %}
+      {% foo_block item, as: 'f' %}
         <p>{{ f.name 'foo' }}</p>
         <p>{{ f.name }}</p> <!-- intentionally blank -->
         <p>{{ f.name 'bar' }}</p>
@@ -19,7 +20,7 @@ describe FooBlock do
   end
 
   it 'has wrapper html' do
-    @output.should =~ /<div id="block-wrapper">.*<\/div>/m
+    @output.should =~ /<div id="block-wrapper" data-value="Item Text">.*<\/div>/m
   end
 
   it 'has an email field and does not take arguments' do

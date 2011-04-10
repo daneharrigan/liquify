@@ -1,6 +1,7 @@
 class FooBlock < Liquify::Block
-  def invoke
-    "<div id=\"block-wrapper\">#{yield}</div>"
+  def invoke(params)
+    options = params.extract_options!
+    "<div id=\"block-wrapper\" data-value=\"#{params.first}\">#{yield}</div>"
   end
 
   def name(params)
