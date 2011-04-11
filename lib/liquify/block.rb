@@ -35,7 +35,7 @@ module Liquify
       options = params.dup.extract_options!
       drop_tokens = @tokens.grep /\{\{\s*#{options['as']}\..*\}\}/
 
-      context[options['as']] = Liquify::Block::Drop.new(self, drop_tokens, context)
+      context[options['as']] = Liquify::Block::Drop.new(self, drop_tokens, context, options['as'])
 
       args = []
       args << params if method(:invoke).arity == 1
@@ -48,12 +48,12 @@ module Liquify
     end
 
     class Drop < Liquid::Drop
-      def initialize(obj, tokens, context) # :nodoc:
+      def initialize(obj, tokens, context, as) # :nodoc:
         @obj = obj
         @params = {}
 
         tokens.each do |t|
-          match, key, value = t.match(/\{\{\s*f\.(\w+)(.*)\}\}/).to_a
+          match, key, value = t.match(/\{\{\s*#{as}\.(\w+)(.*)\}\}/).to_a
 
           @params[key] ||= []
           @params[key] << Liquify::Parameter.new(value, context)
