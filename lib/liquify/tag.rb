@@ -2,6 +2,7 @@ module Liquify
   class Tag < Liquid::Tag
     def render(context)
       return unless respond_to? :invoke
+      @context = context
 
       if method(:invoke).arity == 0
         invoke
@@ -10,5 +11,10 @@ module Liquify
         invoke(params)
       end
     end
+
+    private
+      def context
+        @context
+      end
   end
 end
