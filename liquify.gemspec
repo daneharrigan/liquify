@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "liquify"
   s.add_dependency 'liquid', '>= 2.2.2'
-  s.add_development_dependency 'rspec', '~> 2.3.0'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
