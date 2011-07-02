@@ -1,4 +1,4 @@
-h1. Liquify
+h1. Liquify "!https://secure.travis-ci.org/daneharrigan/liquify.png!":https://secure.travis-ci.org/daneharrigan/liquify
 
 The Liquify gem is a wrapper to the very popular Liquid templating engine.
 The goal of this project is to make working with Liquid templates, drops, tags, etc.
